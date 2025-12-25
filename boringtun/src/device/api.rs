@@ -216,12 +216,6 @@ fn api_set(reader: &mut BufReader<&UnixStream>, d: &mut LockReadGuard<Device>) -
                 }
                 {
                     let parsed_cmd: Vec<&str> = cmd.splitn(2, '=').collect();
-                    eprintln!("UAPI api_set: raw={:?} parts_len={} parts={:?}", cmd, parsed_cmd.len(), parsed_cmd);
-                    if parsed_cmd.len() != 2 {
-                        eprintln!("UAPI api_set: returning EPROTO for raw={:?}", cmd);
-                        return EPROTO;
-                    }
-
                     let (key, val) = (parsed_cmd[0], parsed_cmd[1]);
 
                     match key {
@@ -309,11 +303,6 @@ fn api_set_peer(
         }
         {
             let parsed_cmd: Vec<&str> = cmd.splitn(2, '=').collect();
-            eprintln!("UAPI api_set_peer: raw={:?} parts_len={} parts={:?}", cmd, parsed_cmd.len(), parsed_cmd);
-            if parsed_cmd.len() != 2 {
-                eprintln!("UAPI api_set_peer: returning EPROTO for raw={:?}", cmd);
-                return EPROTO;
-            }
             let (key, val) = (parsed_cmd[0], parsed_cmd[1]);
             match key {
                 "remove" => match val.parse::<bool>() {
